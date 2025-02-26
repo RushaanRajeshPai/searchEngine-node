@@ -6,10 +6,9 @@ const SearchBar = ({ setResults }) => {
 
   const handleSearch = async () => {
     if (!query) return;
-
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/search?query=${query}`);
-      setResults(data);
+      setResults(data.results); 
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -17,12 +16,7 @@ const SearchBar = ({ setResults }) => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter your search query"
-      />
+      <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Enter your search query" />
       <button onClick={handleSearch}>Search</button>
     </div>
   );

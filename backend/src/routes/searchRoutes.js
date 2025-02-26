@@ -1,18 +1,18 @@
 const express = require("express");
-const { fetchSearchResults, fetchGeminiSummary } = require("../services/searchService");
+const { fetchSearchResults, fetchRankedResults } = require("../services/searchService");
 
 const router = express.Router();
 
 router.get("/search", async (req, res) => {
-  const { query } = req.query;
-  if (!query) {
-    return res.status(400).json({ error: "Query parameter is required" });
-  } 
+    const { query } = req.query;
+    if (!query) {
+        return res.status(400).json({ error: "Query parameter is required" });
+    }
 
-  const sources = await fetchSearchResults(query);
-  const summary = await fetchGeminiSummary(query, sources);
+    await fetchSearchResults(query); // Fetch and store results
+    const rankedResults = await fetchRankedResults(query);
 
-  res.json({ summary, sources });
+    res.json({ results: rankedResults });
 });
 
 module.exports = router;
