@@ -9,7 +9,7 @@ router.get("/search", async (req, res) => {
         return res.status(400).json({ error: "Query parameter is required" });
     }
 
-    await fetchSearchResults(query); // Fetch and store results
+    await fetchSearchResults(query); 
     const rankedResults = await fetchRankedResults(query);
 
     res.json({ results: rankedResults });
